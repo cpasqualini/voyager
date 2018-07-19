@@ -25,6 +25,7 @@ return [
     'display_name_plural'    => 'Display Name (Plural)',
     'display_name_singular'  => 'Display Name (Singular)',
     'edit_rows'              => 'Edit the rows for the :table table below',
+    'generate_bread_controller'   => 'Generate BREAD Controller',
     'generate_permissions'   => 'Generate Permissions',
     'icon_class'             => 'Icon to use for this Table',
     'icon_hint'              => 'Icon (optional) Use a',
