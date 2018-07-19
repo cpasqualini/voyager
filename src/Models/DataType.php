@@ -26,7 +26,7 @@ class DataType extends Model
         'policy_name',
         'controller',
         'description',
-        'generate_permissions',
+	'generate_permissions',
         'server_side',
         'order_column',
         'order_display_column',
@@ -152,16 +152,17 @@ class DataType extends Model
                     $controller_class_name = class_basename($this->controller);
 
                     if (realpath($controller_path)) {
-                        throw new \Exception(__('voyager.database.bread_controller_already_exists'));
+                        throw new \Exception(__('voyager.database.bread_controller_already_exists: '.realpath($controller_path)));
                     }else{
                         // Create dir if needed
                         if (!file_exists(preg_replace("/\/[^\/]*$/", '', $controller_path)) && !is_dir(preg_replace("/\/[^\/]*$/", '', $controller_path)))
                             mkdir(preg_replace("/\/[^\/]*$/", '', $controller_path), 0755, true);
 
                         // Get and modify content
-                        $controller_content = file_get_contents(base_path('vendor/tcg/voyager/src/Http/Controllers/VoyagerBreadController.php'));
+                        $controller_content = file_get_contents(base_path('vendor/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php'));
                         $controller_content = str_replace('namespace TCG\Voyager\Http\Controllers;', 'namespace ' .$controller_namespace. ';', $controller_content);
-                        $controller_content = str_replace('class VoyagerBreadController extends Controller', 'class ' .$controller_class_name. ' extends \TCG\Voyager\Http\Controllers\VoyagerBreadController', $controller_content);
+                        //$controller_content = str_replace('class VoyagerBreadController extends Controller', 'class ' .$controller_class_name. ' extends \TCG\Voyager\Http\Controllers\VoyagerBreadController', $controller_content);
+                        $controller_content = str_replace('class VoyagerBaseController extends Controller', 'class ' .$controller_class_name. ' extends \TCG\Voyager\Http\Controllers\VoyagerBaseController', $controller_content);
 
                         // Write to file
                         file_put_contents($controller_path, $controller_content);
